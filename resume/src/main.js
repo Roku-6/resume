@@ -10,5 +10,9 @@ new Vue({
   router,
   store,
   vuetify,
+  beforeCreate () {
+    // LocalStorageからデータ読込
+    this.$store.dispatch('doLoad')
+  },
   render: h => h(App)
 }).$mount('#app')

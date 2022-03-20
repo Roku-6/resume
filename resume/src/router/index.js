@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const vueRouter = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -16,6 +16,18 @@ export default new VueRouter({
       path: '/LoginPage',
       name: 'LoginPage',
       component: () => import('../views/LoginPage.vue')
+    },
+    {
+      path: '/ProfileEdit',
+      name: 'ProfileEdit',
+      component: () => import('../views/ProfileEdit.vue')
+    },
+    {
+      path: '/tempActivePage',
+      name: 'tempActivePage',
+      component: () => import('../views/tempActivePage.vue')
     }
   ]
 })
+
+export default vueRouter

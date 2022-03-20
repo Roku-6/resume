@@ -1,48 +1,66 @@
 <template>
-<v-app>
-  <v-card width="400px" class="mx-auto mt-5">
-    <v-card-title>
-      <h1 class="display-1">ログイン</h1>
-    </v-card-title>
-    <v-card-text>
-      <v-form>
-        <v-text-field
-          prepend-icon="mdi-account-circle"
-          label="ユーザ名"
-          v-model="name"
-        />
-        <v-text-field
-          v-bind:type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-          prepend-icon="mdi-lock"
-          v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          label="パスワード"
-          v-model="password"
-        />
-        <v-card-actions>
-           <v-btn class="info" to="/" @click="submit">ログイン</v-btn>
-        </v-card-actions>
-      </v-form>
-    </v-card-text>
-  </v-card>
-</v-app>
+  <v-app>
+    <div class="formContainer">
+      <v-text-field
+        v-model="email"
+        :rules="emailRules"
+        label="メールアドレス"
+        value="yamada-taro@sample.com"
+        placeholder="yamada-taro@sample.com"
+        required
+        class="mb-4"
+      ></v-text-field>
+      <v-text-field
+        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :passwordRules="[passwordRules.min]"
+        :type="show ? 'text' : 'password'"
+        label="パスワード"
+        class="mb-4"
+        @click:append="show = !show"
+        ></v-text-field>
+      <button @click="login" class="login">ログイン</button>
+    </div>
+  </v-app>
 </template>
 
 <script>
-
 export default {
   name: 'LoginPage',
   data () {
     return {
       showPassword: false,
-      name: '',
-      password: ''
+      email: '',
+      emailRules: [
+        v => !!v || 'メールアドレスを入力してください。',
+        v => /.+@.+\..+/.test(v) || 'メールアドレスを入力してください。'
+      ],
+      passwordRules: {
+        min: v => v.length >= 8 || 'Min 8 characters'
+      },
+      password: '',
+      show: false
     }
   },
   methods: {
-    submit () {
-      console.log(this.name, this.password)
+    login: function () {
+      this.$router.push('/')
     }
   }
 }
 </script>
+
+<style>
+.formContainer {
+  margin: 100px auto;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+}
+.login {
+  background-color: #A0CDA9;
+  color: #fff;
+  height: 50px;
+  width:100px;
+  border-radius: 10px;
+}
+</style>
