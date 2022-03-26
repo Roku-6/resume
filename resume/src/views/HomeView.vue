@@ -9,7 +9,7 @@
             <ResumeCreate :card="card" />
           </v-col>
         </v-row>
-        <v-btn color="green" dark fixed fab style="right: 6rem; bottom: 6rem" @click="addCard()">
+        <v-btn color="green" dark fixed fab style="right: 6rem; bottom: 6rem" @click="addCard(); save();">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-container>
@@ -31,6 +31,9 @@ export default {
   methods: {
     addCard: function () {
       this.$store.commit('addCard', this.title)
+    },
+    save: function () {
+      this.$store.dispatch('doSave')
     }
   }
 }
