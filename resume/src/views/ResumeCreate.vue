@@ -1,61 +1,124 @@
 <template>
-  <v-dialog v-model="dialog" scrollable persistent max-width="600px">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn elevation="8" height="200px" width="100%"
-        v-bind="attrs" v-on="on" class="resumeCard ma-1">
-        職務経歴書1
-      </v-btn>
-    </template>
-    <v-card>
+  <v-container mx-2 @click.stop="dialog = !dialog">
+    <v-card ripple elevation="8" class="resumeCard" flat rounded="xl" height="192px" width="100%">
       <v-card-text>
-        <v-row>
-          <v-col cols="6">
-            <v-text-field label="タイトル"></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea placeholder="経験・知識" outlined>
-            </v-textarea>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea placeholder="自己PR" outlined>
-            </v-textarea>
-          </v-col>
-          <v-col cols="12" v-for="(qualification, index) in card.contents.qualifications" :key="index">
-            <QualificationsList :qualification="qualification" />
-          </v-col>
-          <v-col>
-            <v-card-text style="position: relative">
-              <v-fab-transition>
-                <v-btn color="green" dark absolute top right fab @click="addQualification">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-fab-transition>
-            </v-card-text>
-          </v-col>
-          <v-col cols="12" v-for="(experience, index) in card.contents.experiences" :key="index">
-            <ExperiencesList :experience="experience" />
-          </v-col>
-          <v-col>
-            <v-card-text style="position: relative">
-              <v-fab-transition>
-                <v-btn color="green" dark absolute top right fab @click="addExperience">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-fab-transition>
-            </v-card-text>
-          </v-col>
-          <v-col cols="12" align="center">
-            <small>入力した内容は、自動保存されます。</small>
-          </v-col>
-          <v-col cols="12" align="center">
-            <v-btn center color="blue darken-1" text @click="dialog = false; save()">
-              閉じる
+        <v-row align="center">
+          <v-col cols="6">更新日時：{{ dateOfUpdating }}</v-col>
+          <v-col cols="2">
+            <v-btn icon @click.stop="">
+              <v-icon>mdi-tray-arrow-down</v-icon>
             </v-btn>
+          </v-col>
+          <v-col cols="2">
+            <v-btn icon @click.stop="duplicateCard">
+              <v-icon>mdi-content-copy</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col cols="2">
+            <v-btn icon @click.stop="deleteDialog = !deleteDialog">
+              <v-icon>mdi-delete-outline</v-icon>
+            </v-btn>
+            <v-dialog v-model="deleteDialog" persistent width="25%">
+              <v-card flat rounded="xl" height="200px">
+                <v-container fill-height>
+                  <v-col>
+                    <v-card-title class="justify-center">
+                      {{ selfInfo.title }} を削除します
+                    </v-card-title>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" text @click.stop="deleteCard(); save();">削除</v-btn>
+                      <v-divider vertical></v-divider>
+                      <v-btn color="primary" text @click.stop="deleteDialog = false">キャンセル</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-col>
+                </v-container>
+              </v-card>
+            </v-dialog>
           </v-col>
         </v-row>
       </v-card-text>
+      <v-card-title class="justify-center">
+        {{ selfInfo.title }}
+      </v-card-title>
     </v-card>
-  </v-dialog>
+    <v-dialog v-model="dialog" scrollable persistent max-width="1800px"><!--fullscreen-->
+      <v-card class="pa-10">
+        <v-card-text>
+          <v-row  class="my-5">
+            <v-col cols="4">
+              <v-text-field hide-details label="タイトル" v-model='selfInfo.title' color="#A0A0A0"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
+            <v-col cols="3">
+              <v-text-field hide-details label="名前" v-model='this.selfInfo.contents.fullName' color="#A0A0A0"></v-text-field>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field hide-details label="フリガナ" v-model='this.selfInfo.contents.furigana' color="#A0A0A0"></v-text-field>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field hide-details label="生年月日" v-model='this.selfInfo.contents.birthday' color="#A0A0A0"></v-text-field>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field hide-details label="性別" v-model='this.selfInfo.contents.sex' color="#A0A0A0"></v-text-field>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field hide-details label="最寄駅" v-model='this.selfInfo.contents.nearestStation' color="#A0A0A0"></v-text-field>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field hide-details label="路線" v-model='this.selfInfo.contents.railRoute' color="#A0A0A0"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
+            <v-col cols="12">
+              <v-textarea hide-details placeholder="経験・知識" color="#A0A0A0" outlined>
+              </v-textarea>
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
+            <v-col cols="12">
+              <v-textarea hide-details placeholder="自己PR" color="#A0A0A0" outlined>
+              </v-textarea>
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
+            <v-col cols=12>
+              資格
+              <v-btn color="green" class="ml-2" x-small dark fab @click="addQualification">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="6" v-for="qualification in card.contents.qualifications" :key="qualification.id">
+              <QualificationsList :card="card" :qualification="qualification" />
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
+            <v-col cols=12 class="ml-2">
+              職歴
+              <v-btn color="green" class="ml-2" x-small dark fab @click="addExperience">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="12" v-for="experience in card.contents.experiences" :key="experience.id">
+              <ExperiencesList :card="card" :experience="experience" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" align="center">
+              <small>入力した内容は、自動保存されます。</small>
+            </v-col>
+            <v-col cols="12" align="center">
+              <v-btn center color="blue darken-1" text @click="dialog = false; save()">
+                閉じる
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script>
@@ -64,32 +127,47 @@ import ExperiencesList from './ExperiencesList'
 
 export default {
   name: 'ResumeCreate',
+  data () {
+    return {
+      dialog: false,
+      deleteDialog: false,
+      selfInfo: this.card
+    }
+  },
+  mounted () {
+    console.log(this.selfInfo.contents.fullName + ':コンポーネントだよ')
+  },
   components: {
     QualificationsList,
     ExperiencesList
   },
   props: {
-    card: Object,
-    index: Number
+    card: Object
+  },
+  computed: {
+    dateOfUpdating: () => {
+      const date = new Date()
+      return date.toLocaleDateString()
+    }
   },
   methods: {
+    duplicateCard: function () {
+      this.$store.commit('duplicateCard', this.selfInfo.id)
+    },
+    deleteCard: function () {
+      this.$store.commit('deleteCard', this.selfInfo.id)
+    },
     addQualification: function () {
-      this.$store.commit('addQualification', this.index)
+      this.$store.commit('addQualification', this.selfInfo.id)
     },
     addExperience: function () {
-      this.$store.commit('addExperience', this.index)
+      this.$store.commit('addExperience', this.selfInfo.id)
     },
     clearText: function () {
       this.$store.commit('clearText')
     },
     save: function () {
       this.$store.dispatch('doSave')
-    }
-  },
-  data () {
-    return {
-      dialog: false,
-      selfInfo: this.card
     }
   }
 }
@@ -98,5 +176,6 @@ export default {
 <style>
 .resumeCard {
   border-radius: 20px;
+  overflow: hidden;
 }
 </style>
