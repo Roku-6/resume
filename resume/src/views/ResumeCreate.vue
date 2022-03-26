@@ -53,22 +53,22 @@
           </v-row>
           <v-row class="my-6 pa-2">
             <v-col cols="3">
-              <v-text-field hide-details label="名前" v-model='this.selfInfo.contents.fullName' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="名前" v-model='this.selfInfo.contents.fullName' color="#A0A0A0"></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field hide-details label="フリガナ" v-model='this.selfInfo.contents.furigana' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="フリガナ" v-model='this.selfInfo.contents.furigana' color="#A0A0A0"></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field hide-details label="生年月日" v-model='this.selfInfo.contents.birthday' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="生年月日" v-model='this.selfInfo.contents.birthday' color="#A0A0A0"></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field hide-details label="性別" v-model='this.selfInfo.contents.sex' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="性別" v-model='this.selfInfo.contents.sex' color="#A0A0A0"></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field hide-details label="最寄駅" v-model='this.selfInfo.contents.nearestStation' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="最寄駅" v-model='this.selfInfo.contents.nearestStation' color="#A0A0A0"></v-text-field>
             </v-col>
             <v-col cols="3">
-              <v-text-field hide-details label="路線" v-model='this.selfInfo.contents.railRoute' color="#A0A0A0"></v-text-field>
+              <v-text-field hide-details readonly label="路線" v-model='this.selfInfo.contents.railRoute' color="#A0A0A0"></v-text-field>
             </v-col>
           </v-row>
           <v-row class="my-6 pa-2">
