@@ -34,12 +34,9 @@
               </v-text-field>
             </v-col>
             <v-col xl=12 align="center">
-              <v-btn @click="save">保存</v-btn>
+              入力した内容は、自動保存されます。
             </v-col>
           </v-row>
-          <ul>
-            <li>{{ user }}</li>
-          </ul>
         </v-card-text>
       </v-card>
     </v-main>
@@ -47,8 +44,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'ProfileEdit',
   computed: {
@@ -65,16 +60,6 @@ export default {
     save: function () {
       this.$store.dispatch('doSave')
     }
-  },
-  data () {
-    return {
-      user: []
-    }
-  },
-  mounted () {
-    axios.get('http://localhost:8000/api/user/vue_laravel_api@example.com')
-      .then(response => { this.user = response.data })
-      .catch(error => console.log(error))
   }
 }
 </script>
