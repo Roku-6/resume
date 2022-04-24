@@ -25,7 +25,6 @@ export default {
   name: 'HomeView',
   components: {
     AppHeader,
-    // testTest,
     ResumeCreate
   },
   methods: {

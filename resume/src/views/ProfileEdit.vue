@@ -10,36 +10,33 @@
         <v-card-text>
           <v-row align="center" class="mx-0">
             <v-col xl=3>
-              <v-text-field label="名前" v-model='profile.fullName'>
+              <v-text-field label="名前" v-model="profile.user_name">
               </v-text-field>
             </v-col>
             <v-col xl=3>
-              <v-text-field label="フリガナ" v-model='profile.furigana'>
+              <v-text-field label="フリガナ" v-model="profile.user_kana">
               </v-text-field>
             </v-col>
             <v-col xl=3>
-              <v-text-field label="生年月日" v-model='profile.birthday'>
+              <v-text-field label="生年月日" v-model="profile.birth_date">
               </v-text-field>
             </v-col>
             <v-col xl=3>
-              <v-text-field label="性別" v-model='profile.sex'>
+              <v-text-field label="性別" v-model="profile.gender">
               </v-text-field>
             </v-col>
             <v-col xl=3>
-              <v-text-field label="最寄駅" v-model='profile.nearestStation'>
+              <v-text-field label="最寄駅" v-model="profile.nearest">
               </v-text-field>
             </v-col>
             <v-col xl=3>
-              <v-text-field label="路線" v-model='profile.railRoute'>
+              <v-text-field label="路線" v-model="profile.line">
               </v-text-field>
             </v-col>
             <v-col xl=12 align="center">
               <v-btn @click="save">保存</v-btn>
             </v-col>
           </v-row>
-          <ul>
-            <li>{{ user }}</li>
-          </ul>
         </v-card-text>
       </v-card>
     </v-main>
@@ -47,8 +44,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'ProfileEdit',
   computed: {
@@ -56,25 +51,15 @@ export default {
       get () {
         return this.$store.getters.getProfile
       },
-      set (profile) {
-        this.$store.commit('setProfile', profile)
+      set (value) {
+        this.$store.commit('setProfile', value)
       }
     }
   },
   methods: {
-    save: function () {
+    save () {
       this.$store.dispatch('doSave')
     }
-  },
-  data () {
-    return {
-      user: []
-    }
-  },
-  mounted () {
-    axios.get('http://localhost:8000/api/user/vue_laravel_api@example.com')
-      .then(response => { this.user = response.data })
-      .catch(error => console.log(error))
   }
 }
 </script>

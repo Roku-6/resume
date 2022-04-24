@@ -135,7 +135,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.selfInfo.contents.fullName + ':コンポーネントだよ')
   },
   components: {
     QualificationsList,

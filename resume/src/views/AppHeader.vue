@@ -3,8 +3,9 @@
     <v-navigation-drawer app v-model="drawer" clipped disable-resize-watcher>
       <v-container >
         <v-list-item>
-        taro_yamada@sample.com
+        {{ address.user_name }}
         </v-list-item>
+        <v-divider />
         <v-list nav dense>
           <v-list-item v-for="item in items" :key="item.title" link :to="item.link">
             <v-list-item-content>
@@ -30,8 +31,7 @@ export default {
   name: 'AppHeader',
   data () {
     return {
-      editMode: false,
-      address: 'yamada_taro@key_s.net',
+      address: this.$store.getters.getProfile,
       drawer: false,
       items: [
         { title: 'プロフィール編集', link: '/profileEdit' },
@@ -39,10 +39,8 @@ export default {
       ]
     }
   },
-  methods: {
-    changeMode: function () {
-      this.editMode = !this.editMode
-    }
+  mounted () {
+    this.$store.dispatch('getUserInfo')
   }
 }
 </script>
