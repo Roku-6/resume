@@ -9,7 +9,7 @@
             <ResumeCreate :card="card" />
           </v-col>
         </v-row>
-        <v-btn color="green" dark fixed fab style="right: 6rem; bottom: 6rem" @click="addCard(); save();">
+        <v-btn color="green" dark fixed fab style="right: 6rem; bottom: 6rem" @click="addCard">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-container>
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import AppHeader from './AppHeader'
-import ResumeCreate from './ResumeCreate.vue'
+import AppHeader from '../components/AppHeader'
+import ResumeCreate from '../components/ResumeCreate.vue'
 
 export default {
   name: 'HomeView',
@@ -29,10 +29,7 @@ export default {
   },
   methods: {
     addCard: function () {
-      this.$store.commit('addCard', this.title)
-    },
-    save: function () {
-      this.$store.dispatch('doSave')
+      this.$store.commit('addCard')
     }
   }
 }

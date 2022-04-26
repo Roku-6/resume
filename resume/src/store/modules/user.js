@@ -29,18 +29,6 @@ export default {
       state.profile.gender = profile.gender
       state.profile.nearest = profile.nearest
       state.profile.line = profile.line
-    },
-    /* save: function (state) {
-      // Json文字列に変換しLocalStorageへ保存
-      localStorage.setItem(('user'), JSON.stringify(state))
-    }, */
-    load: function (state) {
-      if (localStorage.getItem('user')) {
-        // LocalStorageから取得したJson文字列をパース
-        const user = JSON.parse(localStorage.getItem('user'))
-        // stateを置き換えます。
-        this.replaceState(Object.assign(state, user))
-      }
     }
   },
   actions: {
@@ -50,7 +38,6 @@ export default {
           console.log(response)
           console.log(context.state.profile)
         })
-      // commit('save')
     },
     getUserInfo: function ({ commit }) {
       return axios.get('http://localhost:8000/api/user/vue_laravel_api@example.com')

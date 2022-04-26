@@ -4,35 +4,7 @@ export default {
   namespace: true,
   state () {
     return {
-      cards: [{
-        id: uuid(),
-        title: '新規職務経歴書1',
-        date: '',
-        contents: {
-          fullName: '',
-          furigana: '',
-          birthday: '',
-          sex: '',
-          nearestStation: '',
-          railRoute: '',
-          qualifications: [
-            {
-              id: uuid(),
-              acquisition_date: '',
-              qualification_name: ''
-            }
-          ],
-          experiences: [
-            {
-              id: uuid(),
-              dates: [],
-              occupation: '',
-              jobDescription: '',
-              tools: ''
-            }
-          ]
-        }
-      }]
+      cards: []
     }
   },
   getters: {
@@ -42,19 +14,32 @@ export default {
   },
   mutations: {
     addCard: (state) => {
-      var copyCard = JSON.parse(JSON.stringify(state.profile))
+      console.log(uuid())
       state.cards = state.cards.concat([
         {
           id: uuid(),
           title: '新規職務経歴書1',
-          date: '',
+          update_date: '',
           contents: {
-            fullName: copyCard.fullName,
-            furigana: copyCard.furigana,
-            birthday: copyCard.birthday,
-            sex: copyCard.sex,
-            nearestStation: copyCard.nearestStation,
-            railRoute: copyCard.railRoute,
+            user_id: '',
+            user_name: '',
+            user_kana: '',
+            birth_date: '',
+            gender: '',
+            nearest: '',
+            line: '',
+            jobSummary: '',
+            experiences: [
+              {
+                id: uuid(),
+                startDate: '',
+                endDate: '',
+                occupation: '',
+                jobDescription: '',
+                tools: ''
+              }
+            ],
+            skills: '',
             qualifications: [
               {
                 id: uuid(),
@@ -62,15 +47,7 @@ export default {
                 qualification_name: ''
               }
             ],
-            experiences: [
-              {
-                id: uuid(),
-                dates: [],
-                occupation: '',
-                jobDescription: '',
-                tools: ''
-              }
-            ]
+            aboutMyself: ''
           }
         }
       ])
@@ -168,29 +145,20 @@ export default {
           }
         }
       }
-    },
-    clearText: function (state) {
-      state.cards.name = ''
-    },
-    save: function (state) {
-      // Json文字列に変換しLocalStorageへ保存
-      localStorage.setItem(('cards'), JSON.stringify(state))
-    },
-    load: function (state) {
-      if (localStorage.getItem('cards')) {
-        // LocalStorageから取得したJson文字列をパース
-        const cards = JSON.parse(localStorage.getItem('cards'))
-        // stateを置き換えます。
-        this.replaceState(Object.assign(state, cards))
-      }
     }
-  },
+  } /* ,
   actions: {
-    doSave ({ commit }) {
-      commit('save')
+    doSave (context) {
+      return axios.put('http://localhost:8000/api/', context.state.)
+        .then(response => {
+          console.log(response)
+        })
     },
-    doLoad ({ commit }) {
-      commit('load')
+    getUserInfo: function ({ commit }) {
+      return axios.get('http://localhost:8000/api/')
+        .then(response => {
+          commit('', response.data[0])
+        })
     }
-  }
+  } */
 }

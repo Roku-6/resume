@@ -2,11 +2,16 @@
   <v-card flat relative>
     <v-row no-gutters>
       <v-col cols="4">
-        <v-textarea auto-grow  hide-details label="年月" color="#A0A0A0" outlined>
-        </v-textarea>
+        <v-menu v-model="menu" :close-on-content-click="false" :nudge-left="100"
+          transition="scale-transition" offset-x min-width="auto">
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field height="96px" hide-details v-model="date" label="取得年月" readonly v-bind="attrs" v-on="on" color="#A0A0A0" outlined></v-text-field>
+          </template>
+          <v-date-picker no-title v-model="date" @input="menu = false"></v-date-picker>
+        </v-menu>
       </v-col>
       <v-col cols="8">
-        <v-textarea auto-grow  hide-details v-model='selfInfo.qualification_name' label="資格名" color="#A0A0A0" outlined>
+        <v-textarea height="96px" hide-details no-resize v-model='selfInfo.qualification_name' label="資格名" color="#A0A0A0" outlined>
         </v-textarea>
       </v-col>
     </v-row>
@@ -24,6 +29,8 @@ export default {
   name: 'QualificationsList',
   data () {
     return {
+      date: '',
+      menu: false,
       parentInfo: this.card,
       selfInfo: this.qualification
     }

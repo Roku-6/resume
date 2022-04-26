@@ -1,26 +1,33 @@
 <template>
   <v-card flat relative>
-    <v-row no-gutters>
+    <v-row>
       <v-col cols="2">
-        <v-menu v-model="menu" :close-on-content-click="closeOnContentClick">
+        <v-menu v-model="menu" :close-on-content-click="false" :nudge-left="100"
+          transition="scale-transition" offset-x min-width="auto">
           <template v-slot:activator="{ on, attrs }">
-            <v-textarea auto-grow  hide-details label="年月" v-model="text" v-bind="attrs" v-on="on" readonly clearable outlined>
-            </v-textarea>
+            <v-text-field outlined hide-details v-model="date" label="開始年月" readonly v-bind="attrs" v-on="on" class="mb-4" color="#A0A0A0"></v-text-field>
           </template>
-          <v-date-picker v-model="picker" range @input="formatDate(picker)">
-          </v-date-picker>
+          <v-date-picker no-title v-model="date" @input="menu = false"></v-date-picker>
+        </v-menu>
+        <p style="text-align: center; color: #a0a0a0;" class="mb-4">|</p>
+        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-left="100"
+          transition="scale-transition" offset-x min-width="auto">
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field outlined hide-details v-model="date2" label="終了年月" readonly v-bind="attrs" v-on="on" color="#A0A0A0"></v-text-field>
+          </template>
+          <v-date-picker no-title v-model="date2" @input="menu2 = false"></v-date-picker>
         </v-menu>
       </v-col>
       <v-col cols="3">
-          <v-textarea auto-grow  hide-details v-model='selfInfo.occupation' label="職種" color="#A0A0A0" outlined>
+          <v-textarea hide-details height="516px" no-resize v-model='selfInfo.occupation' label="職種" color="#A0A0A0" outlined>
           </v-textarea>
       </v-col>
       <v-col cols="4">
-          <v-textarea auto-grow  hide-details v-model='selfInfo.jobDescription' label="業務内容" color="#A0A0A0" outlined>
+          <v-textarea hide-details height="516px" no-resize v-model='selfInfo.jobDescription' label="業務内容" color="#A0A0A0" outlined>
           </v-textarea>
       </v-col>
       <v-col cols="3">
-          <v-textarea auto-grow  hide-details v-model='selfInfo.tools' label="使用ツール等" color="#A0A0A0" outlined>
+          <v-textarea hide-details height="516px" no-resize v-model='selfInfo.tools' label="使用ツール等" color="#A0A0A0" outlined>
           </v-textarea>
       </v-col>
     </v-row>
@@ -42,11 +49,10 @@ export default {
   },
   data () {
     return {
-      dates: [],
-      menu: '',
-      text: '',
-      picker: '',
-      closeOnContentClick: false,
+      date: '',
+      date2: '',
+      menu: false,
+      menu2: false,
       parentInfo: this.card,
       selfInfo: this.experience
     }

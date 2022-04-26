@@ -3,7 +3,7 @@
     <v-card ripple elevation="8" class="resumeCard" flat rounded="xl" height="192px" width="100%">
       <v-card-text>
         <v-row align="center">
-          <v-col cols="6">更新日時：{{ dateOfUpdating }}</v-col>
+          <v-col cols="6">更新日時：</v-col>
           <v-col cols="2">
             <v-btn icon @click.stop="">
               <v-icon>mdi-tray-arrow-down</v-icon>
@@ -27,7 +27,7 @@
                     </v-card-title>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="primary" text @click.stop="deleteCard(); save();">削除</v-btn>
+                      <v-btn color="primary" text @click.stop="deleteCard">削除</v-btn>
                       <v-divider vertical></v-divider>
                       <v-btn color="primary" text @click.stop="deleteDialog = false">キャンセル</v-btn>
                       <v-spacer></v-spacer>
@@ -73,13 +73,24 @@
           </v-row>
           <v-row class="my-6 pa-2">
             <v-col cols="12">
-              <v-textarea hide-details placeholder="経験・知識" color="#A0A0A0" outlined>
+              <v-textarea hide-details placeholder="職務要約" color="#A0A0A0" outlined>
               </v-textarea>
             </v-col>
           </v-row>
           <v-row class="my-6 pa-2">
+            <v-col cols=12 class="ml-2">
+              職務職歴
+              <v-btn color="green" class="ml-2" x-small dark fab @click="addExperience">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col cols="12" v-for="experience in card.contents.experiences" :key="experience.id">
+              <ExperiencesList :card="card" :experience="experience"  style="border: solid #A0A0A0 0.3px" class="pa-4"/>
+            </v-col>
+          </v-row>
+          <v-row class="my-6 pa-2">
             <v-col cols="12">
-              <v-textarea hide-details placeholder="自己PR" color="#A0A0A0" outlined>
+              <v-textarea hide-details placeholder="活かせる経験・知識・スキル" color="#A0A0A0" outlined>
               </v-textarea>
             </v-col>
           </v-row>
@@ -91,27 +102,19 @@
               </v-btn>
             </v-col>
             <v-col cols="6" v-for="qualification in card.contents.qualifications" :key="qualification.id">
-              <QualificationsList :card="card" :qualification="qualification" />
+              <QualificationsList :card="card" :qualification="qualification"/>
             </v-col>
           </v-row>
           <v-row class="my-6 pa-2">
-            <v-col cols=12 class="ml-2">
-              職歴
-              <v-btn color="green" class="ml-2" x-small dark fab @click="addExperience">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col cols="12" v-for="experience in card.contents.experiences" :key="experience.id">
-              <ExperiencesList :card="card" :experience="experience" />
+            <v-col cols="12">
+              <v-textarea hide-details placeholder="自己PR" color="#A0A0A0" outlined>
+              </v-textarea>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" align="center">
-              <small>入力した内容は、自動保存されます。</small>
-            </v-col>
-            <v-col cols="12" align="center">
-              <v-btn center color="blue darken-1" text @click="dialog = false; save()">
-                閉じる
+              <v-btn center color="blue darken-1" text @click="dialog = false">
+                保存して閉じる
               </v-btn>
             </v-col>
           </v-row>
@@ -143,12 +146,6 @@ export default {
   props: {
     card: Object
   },
-  computed: {
-    dateOfUpdating: () => {
-      const date = new Date()
-      return date.toLocaleDateString()
-    }
-  },
   methods: {
     duplicateCard: function () {
       this.$store.commit('duplicateCard', this.selfInfo.id)
@@ -161,12 +158,6 @@ export default {
     },
     addExperience: function () {
       this.$store.commit('addExperience', this.selfInfo.id)
-    },
-    clearText: function () {
-      this.$store.commit('clearText')
-    },
-    save: function () {
-      this.$store.dispatch('doSave')
     }
   }
 }

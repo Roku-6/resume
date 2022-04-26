@@ -21,11 +21,6 @@ const vueRouter = new VueRouter({
       path: '/ProfileEdit',
       name: 'ProfileEdit',
       component: () => import('../views/ProfileEdit.vue')
-    },
-    {
-      path: '/tempActivePage',
-      name: 'tempActivePage',
-      component: () => import('../views/tempActivePage.vue')
     }
   ]
 })
