@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { user, cards } from './modules/index'
+import { user, resumes } from './modules/index'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
     user,
-    cards
+    resumes
   }
 })
 

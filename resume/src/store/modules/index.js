@@ -1,7 +1,7 @@
 import user from './user'
-import cards from './cards'
+import resumes from './resumes'
 
 export {
   user,
-  cards
+  resumes
 }

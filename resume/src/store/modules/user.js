@@ -32,17 +32,17 @@ export default {
     }
   },
   actions: {
-    doSave (context) {
-      return axios.put('http://localhost:8000/api/user/vue_laravel_api@example.com', context.state.profile)
-        .then(response => {
-          console.log(response)
-          console.log(context.state.profile)
-        })
-    },
     getUserInfo: function ({ commit }) {
       return axios.get('http://localhost:8000/api/user/vue_laravel_api@example.com')
         .then(response => {
           commit('setProfile', response.data[0])
+        })
+    },
+    doUserSave (context) {
+      return axios.put('http://localhost:8000/api/user/vue_laravel_api@example.com', context.state.profile)
+        .then(response => {
+          console.log(response)
+          console.log(context.state.profile)
         })
     }
   }

@@ -38,9 +38,6 @@ export default {
         { title: 'ログアウト', link: '/loginPage' }
       ]
     }
-  },
-  mounted () {
-    this.$store.dispatch('getUserInfo')
   }
 }
 </script>

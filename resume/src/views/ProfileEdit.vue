@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     save () {
-      this.$store.dispatch('doSave')
+      this.$store.dispatch('doUserSave')
     }
   }
 }
