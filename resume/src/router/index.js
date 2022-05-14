@@ -13,9 +13,19 @@ const vueRouter = new VueRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
-      path: '/LoginPage',
-      name: 'LoginPage',
-      component: () => import('../views/LoginPage.vue')
+      path: '/SignInPage',
+      name: 'SignInPage',
+      component: () => import('../views/SignInPage.vue')
+    },
+    {
+      path: '/SignUpPage',
+      name: 'SignUpPage',
+      component: () => import('../views/SignUpPage.vue')
+    },
+    {
+      path: '/ComfirmSignIn',
+      name: 'ComfirmSignIn',
+      component: () => import('../views/ComfirmSignIn.vue')
     },
     {
       path: '/ProfileEdit',

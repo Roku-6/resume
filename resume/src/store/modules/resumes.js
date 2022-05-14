@@ -187,7 +187,6 @@ export default {
     getResumes: function (context) {
       return axios.get('http://localhost:8000/api/resumes')
         .then(response => {
-          console.log(response)
           context.state.resumes = []
           context.commit('setResumes', response.data)
         })
